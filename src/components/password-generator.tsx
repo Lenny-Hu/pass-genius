@@ -56,7 +56,7 @@ export function PasswordGenerator() {
       switch (generationType) {
         case 'general':
           const first10 = hash.substring(0, 10);
-          result = first10.charAt(0).toUpperCase() + first10.slice(1);
+          result = first10.replace(/[a-zA-Z]/, c => c.toUpperCase());
           break;
         case '6-digit':
           const digitsOnly6 = hash.replace(/\D/g, '');
