@@ -210,7 +210,7 @@ export function PasswordGenerator() {
                   {(['general', '6-digit', '8-digit'] as const).map(value => (
                       <div key={value}>
                           <RadioGroupItem value={value} id={value} className="peer sr-only" />
-                          <Label htmlFor={value} className="flex h-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 text-sm font-medium hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary capitalize">
+                          <Label htmlFor={value} className="flex h-10 cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-popover px-4 text-sm font-medium hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary capitalize">
                               {passwordTypes[value]}
                           </Label>
                       </div>
