@@ -34,4 +34,5 @@ export default {
   'hide.salt': '隐藏盐',
   'add.year': '添加年份',
   'add.underscore': '添加下划线 (_)',
+  'copy.to.clipboard': '写入粘贴板',
 } as const;

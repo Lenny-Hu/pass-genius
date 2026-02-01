@@ -34,6 +34,7 @@ export function PasswordGenerator() {
   const [isSaltVisible, setIsSaltVisible] = useState(false);
   const [addYear, setAddYear] = useState(false);
   const [addUnderscore, setAddUnderscore] = useState(false);
+  const [autoCopy, setAutoCopy] = useState(false);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const { toast } = useToast();
 
@@ -97,6 +98,16 @@ export function PasswordGenerator() {
       }
 
       setGeneratedPassword(result);
+
+      if (autoCopy) {
+        navigator.clipboard.writeText(result);
+        setIsCopied(true);
+        toast({
+          title: t('copied'),
+          description: t('copied.description'),
+        });
+      }
+
       setIsDialogOpen(true);
     } catch (error) {
         console.error("Password generation failed:", error);
@@ -211,6 +222,12 @@ export function PasswordGenerator() {
               <Switch id="add-underscore" checked={addUnderscore} onCheckedChange={setAddUnderscore} />
               <Label htmlFor="add-underscore" className="cursor-pointer">
                 {t('add.underscore')}
+              </Label>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Switch id="auto-copy" checked={autoCopy} onCheckedChange={setAutoCopy} />
+              <Label htmlFor="auto-copy" className="cursor-pointer">
+                {t('copy.to.clipboard')}
               </Label>
             </div>
           </div>

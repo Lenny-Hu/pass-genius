@@ -34,4 +34,5 @@ export default {
   'hide.salt': 'Hide salt',
   'add.year': 'Add year',
   'add.underscore': 'Add underscores (_)',
+  'copy.to.clipboard': 'Copy to clipboard',
 } as const;
