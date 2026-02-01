@@ -149,7 +149,7 @@ export function PasswordGenerator() {
 
   return (
     <>
-      <Card className="w-full max-w-md shadow-2xl animate-in fade-in-0 zoom-in-95 duration-500">
+      <Card className="w-full md:max-w-md shadow-none md:shadow-2xl rounded-none md:rounded-lg border-none md:border min-h-screen md:min-h-0 flex flex-col justify-center animate-in fade-in-0 zoom-in-95 duration-500">
         <CardHeader className="text-center">
           <div className="mx-auto flex items-center justify-center gap-2">
               <Lock className="h-6 w-6 text-primary" />
