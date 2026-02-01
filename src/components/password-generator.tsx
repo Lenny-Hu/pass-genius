@@ -16,12 +16,12 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { KeyRound, Lock, Copy, Check } from 'lucide-react';
-import { useI18n } from '@/i18n/client';
+import { useI18n } from '@/components/providers';
 
 type GenerationType = 'general' | '6-digit' | '8-digit';
 
 export function PasswordGenerator() {
-  const t = useI18n();
+  const { t } = useI18n();
   const [password, setPassword] = useState('');
   const [salt, setSalt] = useState('');
   const [generationType, setGenerationType] = useState<GenerationType>('general');

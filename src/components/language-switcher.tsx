@@ -1,6 +1,6 @@
 'use client';
 
-import { useChangeLocale, useCurrentLocale, useI18n } from '@/i18n/client';
+import { useI18n } from '@/components/providers';
 import {
   Select,
   SelectContent,
@@ -10,9 +10,7 @@ import {
 } from '@/components/ui/select';
 
 export function LanguageSwitcher() {
-  const changeLocale = useChangeLocale();
-  const locale = useCurrentLocale();
-  const t = useI18n();
+  const { locale, changeLocale, t } = useI18n();
 
   return (
     <Select value={locale} onValueChange={(newLocale) => changeLocale(newLocale as 'en' | 'zh')}>

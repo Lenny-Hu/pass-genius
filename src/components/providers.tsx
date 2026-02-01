@@ -1,11 +1,33 @@
 'use client';
 
-import { I18nProviderClient } from '@/i18n/client';
 import { Toaster } from '@/components/ui/toaster';
 import { SWRegister } from '@/components/sw-register';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState, createContext, useContext, useCallback } from 'react';
+import en from '@/locales/en';
+import zh from '@/locales/zh';
 
-// Function to get cookie on the client side
+type Locale = 'en' | 'zh';
+type Translations = typeof en;
+
+interface I18nContextType {
+  locale: Locale;
+  changeLocale: (newLocale: Locale) => void;
+  t: (key: keyof Translations) => string;
+}
+
+const I18nContext = createContext<I18nContextType>({
+  locale: 'zh',
+  changeLocale: () => { throw new Error('changeLocale called outside of I18nProvider'); },
+  t: (key: keyof Translations) => { 
+    // Provide a fallback for the initial server render if needed, though the provider's default should prevent this
+    return zh[key] || String(key);
+  },
+});
+
+export const useI18n = () => useContext(I18nContext);
+
+const translations: Record<Locale, Translations> = { en, zh };
+
 function getCookie(name: string): string | undefined {
   if (typeof document === 'undefined') {
     return undefined;
@@ -18,29 +40,38 @@ function getCookie(name: string): string | undefined {
   return undefined;
 }
 
-
 export function Providers({ children }: { children: ReactNode }) {
-  // 1. Set a default locale for the initial render (server and client)
-  // This ensures there is no hydration mismatch.
-  const [locale, setLocale] = useState('zh');
+  const [locale, setLocale] = useState<Locale>('zh');
 
-  // 2. On the client, after mounting, check for a saved preference in cookies.
   useEffect(() => {
     const cookieLocale = getCookie('NEXT_LOCALE');
     if (cookieLocale && (cookieLocale === 'en' || cookieLocale === 'zh')) {
       setLocale(cookieLocale);
     }
-  }, []); // Empty dependency array ensures this runs only once on mount.
+  }, []);
 
-  // 3. Render the provider with the determined locale.
-  // On server: 'zh'
-  // On client initial render: 'zh'
-  // On client after effect: cookie value (e.g., 'en') or 'zh'
+  const changeLocale = (newLocale: Locale) => {
+    if (newLocale !== locale) {
+      setLocale(newLocale);
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
+    }
+  };
+
+  const t = useCallback((key: keyof Translations) => {
+    return translations[locale]?.[key] || String(key);
+  }, [locale]);
+
+  const contextValue = {
+    locale,
+    changeLocale,
+    t,
+  };
+
   return (
-    <I18nProviderClient locale={locale}>
+    <I18nContext.Provider value={contextValue}>
       {children}
       <Toaster />
       <SWRegister />
-    </I18nProviderClient>
+    </I18nContext.Provider>
   );
 }

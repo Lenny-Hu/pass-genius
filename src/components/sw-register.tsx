@@ -2,11 +2,11 @@
 
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { useI18n } from '@/i18n/client';
+import { useI18n } from '@/components/providers';
 
 export function SWRegister() {
   const { toast } = useToast();
-  const t = useI18n();
+  const { t } = useI18n();
 
   useEffect(() => {
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
