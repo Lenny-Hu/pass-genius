@@ -28,4 +28,8 @@ export default {
   'language': 'Language',
   'language.en': 'English',
   'language.zh': 'Chinese',
+  'show.password': 'Show password',
+  'hide.password': 'Hide password',
+  'show.salt': 'Show salt',
+  'hide.salt': 'Hide salt',
 } as const;

@@ -28,4 +28,8 @@ export default {
   'language': '语言',
   'language.en': '英语',
   'language.zh': '中文',
+  'show.password': '显示密码',
+  'hide.password': '隐藏密码',
+  'show.salt': '显示盐',
+  'hide.salt': '隐藏盐',
 } as const;

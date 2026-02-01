@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
-import { KeyRound, Lock, Copy, Check } from 'lucide-react';
+import { KeyRound, Lock, Copy, Check, Eye, EyeOff } from 'lucide-react';
 import { useI18n } from '@/components/providers';
 
 type GenerationType = 'general' | '6-digit' | '8-digit';
@@ -29,6 +29,8 @@ export function PasswordGenerator() {
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isMasterPasswordVisible, setIsMasterPasswordVisible] = useState(false);
+  const [isSaltVisible, setIsSaltVisible] = useState(false);
   const { toast } = useToast();
 
   const sha256 = async (str: string) => {
@@ -127,11 +129,47 @@ export function PasswordGenerator() {
         <CardContent className="space-y-6">
           <div className="space-y-2">
               <Label htmlFor="password">{t('master.password')}</Label>
-              <Input id="password" type="password" placeholder={t('master.password.placeholder')} value={password} onChange={(e) => setPassword(e.target.value)} />
+              <div className="relative">
+                <Input 
+                  id="password" 
+                  type={isMasterPasswordVisible ? 'text' : 'password'} 
+                  placeholder={t('master.password.placeholder')} 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pr-10"
+                />
+                <Button 
+                  type="button"
+                  variant="ghost" 
+                  className="absolute top-1/2 right-1 h-8 w-8 -translate-y-1/2 p-0 text-muted-foreground hover:text-foreground"
+                  onClick={() => setIsMasterPasswordVisible(!isMasterPasswordVisible)}
+                >
+                  {isMasterPasswordVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  <span className="sr-only">{isMasterPasswordVisible ? t('hide.password') : t('show.password')}</span>
+                </Button>
+              </div>
           </div>
           <div className="space-y-2">
               <Label htmlFor="salt">{t('salt.keyword')}</Label>
-              <Input id="salt" type="text" placeholder={t('salt.keyword.placeholder')} value={salt} onChange={(e) => setSalt(e.target.value)} />
+              <div className="relative">
+                <Input 
+                  id="salt" 
+                  type={isSaltVisible ? 'text' : 'password'}
+                  placeholder={t('salt.keyword.placeholder')} 
+                  value={salt} 
+                  onChange={(e) => setSalt(e.target.value)}
+                  className="pr-10"
+                />
+                <Button 
+                  type="button"
+                  variant="ghost" 
+                  className="absolute top-1/2 right-1 h-8 w-8 -translate-y-1/2 p-0 text-muted-foreground hover:text-foreground"
+                  onClick={() => setIsSaltVisible(!isSaltVisible)}
+                >
+                  {isSaltVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  <span className="sr-only">{isSaltVisible ? t('hide.salt') : t('show.salt')}</span>
+                </Button>
+              </div>
           </div>
           <div className="space-y-3">
               <Label>{t('password.type')}</Label>
