@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { Providers } from '@/components/providers';
+import { I18nProviderClient } from '@/i18n/client';
+import { Toaster } from '@/components/ui/toaster';
+import { SWRegister } from '@/components/sw-register';
+import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: '密码生成器',
@@ -22,8 +25,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value;
+  const locale = localeCookie === 'en' ? 'en' : 'zh';
+
   return (
-    <html lang="zh" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -33,7 +40,11 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png"></link>
       </head>
       <body className="font-body antialiased">
-        <Providers>{children}</Providers>
+        <I18nProviderClient locale={locale}>
+          {children}
+          <Toaster />
+          <SWRegister />
+        </I18nProviderClient>
       </body>
     </html>
   );
