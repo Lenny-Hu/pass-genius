@@ -111,7 +111,7 @@ export function PasswordGenerator() {
         </div>
         <div className="space-y-3">
             <Label>Password Type</Label>
-            <RadioGroup defaultValue="general" value={generationType} onValueChange={(value: GenerationType) => setGenerationType(value)} className="grid grid-cols-3 gap-2 sm:gap-4">
+            <RadioGroup defaultValue="general" value={generationType} onValueChange={(value: GenerationType) => setGenerationType(value)} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {(['general', '6-digit', '8-digit'] as const).map(value => (
                     <div key={value}>
                         <RadioGroupItem value={value} id={value} className="peer sr-only" />
