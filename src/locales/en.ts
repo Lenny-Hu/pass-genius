@@ -35,4 +35,6 @@ export default {
   'add.year': 'Add year',
   'add.underscore': 'Add underscores (_)',
   'copy.to.clipboard': 'Copy to clipboard',
+  'theme.switch': 'Switch theme',
+  'theme.select': 'Select a theme',
 } as const;
