@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { I18nProviderClient } from '@/i18n/client';
-import { Toaster } from '@/components/ui/toaster';
-import { SWRegister } from '@/components/sw-register';
 import { cookies } from 'next/headers';
+import { Providers } from '@/components/providers';
 
 export const metadata: Metadata = {
   title: '密码生成器',
@@ -40,11 +38,9 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png"></link>
       </head>
       <body className="font-body antialiased">
-        <I18nProviderClient locale={locale}>
+        <Providers locale={locale}>
           {children}
-          <Toaster />
-          <SWRegister />
-        </I18nProviderClient>
+        </Providers>
       </body>
     </html>
   );

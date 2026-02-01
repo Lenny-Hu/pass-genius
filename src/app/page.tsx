@@ -1,20 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { PasswordGenerator } from '@/components/password-generator';
 import { LanguageSwitcher } from '@/components/language-switcher';
 
 export default function Home() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-center bg-background p-4 md:p-6">
       <div className="absolute top-4 right-4">
-        {isClient && <LanguageSwitcher />}
+        <LanguageSwitcher />
       </div>
       <PasswordGenerator />
     </main>

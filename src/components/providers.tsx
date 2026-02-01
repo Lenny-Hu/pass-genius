@@ -3,21 +3,9 @@
 import { I18nProviderClient } from '@/i18n/client';
 import { Toaster } from '@/components/ui/toaster';
 import { SWRegister } from '@/components/sw-register';
-import { ReactNode, useState, useEffect } from 'react';
+import { ReactNode } from 'react';
 
-export function Providers({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<string>('zh');
-
-  useEffect(() => {
-    const cookieValue = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('NEXT_LOCALE='))
-      ?.split('=')[1];
-    
-    if (cookieValue && (cookieValue === 'en' || cookieValue === 'zh')) {
-        setLocale(cookieValue);
-    }
-  }, []);
+export function Providers({ children, locale }: { children: ReactNode, locale: string }) {
 
   return (
     <I18nProviderClient locale={locale}>
