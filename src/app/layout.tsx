@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { SWRegister } from '@/components/sw-register';
 import { I18nProviderClient } from '@/i18n/client';
+import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: '密码生成器',
@@ -24,8 +25,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = cookies().get('Next-Locale')?.value || 'zh';
+
   return (
-    <html lang="zh" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -35,7 +38,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png"></link>
       </head>
       <body className="font-body antialiased">
-        <I18nProviderClient>
+        <I18nProviderClient locale={locale}>
           {children}
           <Toaster />
           <SWRegister />
