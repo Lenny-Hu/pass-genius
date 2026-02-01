@@ -33,6 +33,7 @@ export function PasswordGenerator() {
   const [isMasterPasswordVisible, setIsMasterPasswordVisible] = useState(false);
   const [isSaltVisible, setIsSaltVisible] = useState(false);
   const [addYear, setAddYear] = useState(false);
+  const [addUnderscore, setAddUnderscore] = useState(false);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const { toast } = useToast();
 
@@ -90,6 +91,11 @@ export function PasswordGenerator() {
           result = digitsOnly8.substring(mid - 4, mid + 4);
           break;
       }
+      
+      if (addUnderscore) {
+        result = `_${result}_`;
+      }
+
       setGeneratedPassword(result);
       setIsDialogOpen(true);
     } catch (error) {
@@ -194,11 +200,19 @@ export function PasswordGenerator() {
                   ))}
               </RadioGroup>
           </div>
-          <div className="flex items-center space-x-3 rounded-md border p-4">
+          <div className="space-y-4 rounded-md border p-4">
+            <div className="flex items-center space-x-3">
               <Switch id="add-year" checked={addYear} onCheckedChange={setAddYear} />
               <Label htmlFor="add-year" className="cursor-pointer">
                 {t('add.year')} ({currentYear})
               </Label>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Switch id="add-underscore" checked={addUnderscore} onCheckedChange={setAddUnderscore} />
+              <Label htmlFor="add-underscore" className="cursor-pointer">
+                {t('add.underscore')}
+              </Label>
+            </div>
           </div>
           <Button onClick={handleGenerate} className="w-full" size="lg" disabled={isLoading}>
               <KeyRound className="mr-2 h-5 w-5" />

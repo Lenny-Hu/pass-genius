@@ -33,4 +33,5 @@ export default {
   'show.salt': 'Show salt',
   'hide.salt': 'Hide salt',
   'add.year': 'Add year',
+  'add.underscore': 'Add underscores (_)',
 } as const;

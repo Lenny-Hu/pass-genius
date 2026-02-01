@@ -33,4 +33,5 @@ export default {
   'show.salt': '显示盐',
   'hide.salt': '隐藏盐',
   'add.year': '添加年份',
+  'add.underscore': '添加下划线 (_)',
 } as const;
