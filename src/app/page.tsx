@@ -1,12 +1,10 @@
 'use client';
 
 import { PasswordGenerator } from '@/components/password-generator';
-import { useI18n, I18nProviderClient } from '@/i18n/client';
+import { useI18n } from '@/i18n/client';
 import { LanguageSwitcher } from '@/components/language-switcher';
-import { Toaster } from '@/components/ui/toaster';
-import { SWRegister } from '@/components/sw-register';
 
-function AppContent() {
+export default function Home() {
   const t = useI18n();
 
   const translations = {
@@ -42,17 +40,6 @@ function AppContent() {
         <LanguageSwitcher />
       </div>
       <PasswordGenerator translations={translations} />
-      <Toaster />
-      <SWRegister />
     </main>
-  );
-}
-
-
-export default function Home() {
-  return (
-    <I18nProviderClient locale="zh">
-      <AppContent />
-    </I18nProviderClient>
   );
 }
