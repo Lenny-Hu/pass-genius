@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { cookies } from 'next/headers';
 import { Providers } from '@/components/providers';
 
 export const metadata: Metadata = {
@@ -23,12 +22,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = localeCookie === 'en' ? 'en' : 'zh';
-
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang="zh" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -38,7 +33,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png"></link>
       </head>
       <body className="font-body antialiased">
-        <Providers locale={locale}>
+        <Providers>
           {children}
         </Providers>
       </body>
