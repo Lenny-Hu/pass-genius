@@ -3,18 +3,23 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { SWRegister } from '@/components/sw-register';
 import { I18nProviderClient } from '@/i18n/client';
-import { cookies } from 'next/headers';
+import { getI18n, getCurrentLocale } from '@/i18n/server';
 
-export const metadata: Metadata = {
-  title: '密码生成器',
-  description: '一个使用主密钥和盐的安全密码生成器。',
-  manifest: '/manifest.json',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: '密码生成器',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getCurrentLocale();
+  const t = await getI18n(locale);
+
+  return {
+    title: t('app.title'),
+    description: t('app.description'),
+    manifest: '/manifest.json',
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'default',
+      title: t('app.title'),
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: '#D2DFF7',
@@ -25,7 +30,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = cookies().get('Next-Locale')?.value || 'zh';
+  const locale = getCurrentLocale();
 
   return (
     <html lang={locale} suppressHydrationWarning>
