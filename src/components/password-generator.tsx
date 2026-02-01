@@ -16,37 +16,12 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { KeyRound, Lock, Copy, Check } from 'lucide-react';
+import { useI18n } from '@/i18n/client';
 
 type GenerationType = 'general' | '6-digit' | '8-digit';
 
-type Translations = {
-  appTitle: string;
-  appDescription: string;
-  masterPassword: string;
-  masterPasswordPlaceholder: string;
-  saltKeyword: string;
-  saltKeywordPlaceholder: string;
-  passwordType: string;
-  passwordTypeGeneral: string;
-  passwordType6Digit: string;
-  passwordType8Digit: string;
-  generatePassword: string;
-  generating: string;
-  error: string;
-  errorEmptyFields: string;
-  generationFailed: string;
-  generationFailed6Digit: string;
-  generationFailed8Digit: string;
-  unexpectedError: string;
-  copied: string;
-  copiedDescription: string;
-  yourGeneratedPassword: string;
-  copyYourPassword: string;
-  copyPassword: string;
-  close: string;
-}
-
-export function PasswordGenerator({ translations }: { translations: Translations }) {
+export function PasswordGenerator() {
+  const t = useI18n();
   const [password, setPassword] = useState('');
   const [salt, setSalt] = useState('');
   const [generationType, setGenerationType] = useState<GenerationType>('general');
@@ -66,8 +41,8 @@ export function PasswordGenerator({ translations }: { translations: Translations
   const handleGenerate = async () => {
     if (!password || !salt) {
       toast({
-        title: translations.error,
-        description: translations.errorEmptyFields,
+        title: t('error'),
+        description: t('error.empty.fields'),
         variant: 'destructive',
       });
       return;
@@ -88,7 +63,7 @@ export function PasswordGenerator({ translations }: { translations: Translations
         case '6-digit':
           const digitsOnly6 = hash.replace(/\D/g, '');
           if (digitsOnly6.length < 6) {
-            toast({ title: translations.generationFailed, description: translations.generationFailed6Digit, variant: 'destructive'});
+            toast({ title: t('generation.failed'), description: t('generation.failed.6-digit'), variant: 'destructive'});
             setIsLoading(false);
             return;
           }
@@ -97,7 +72,7 @@ export function PasswordGenerator({ translations }: { translations: Translations
         case '8-digit':
           const digitsOnly8 = hash.replace(/\D/g, '');
           if (digitsOnly8.length < 8) {
-            toast({ title: translations.generationFailed, description: translations.generationFailed8Digit, variant: 'destructive'});
+            toast({ title: t('generation.failed'), description: t('generation.failed.8-digit'), variant: 'destructive'});
             setIsLoading(false);
             return;
           }
@@ -109,7 +84,7 @@ export function PasswordGenerator({ translations }: { translations: Translations
       setIsDialogOpen(true);
     } catch (error) {
         console.error("Password generation failed:", error);
-        toast({ title: translations.error, description: translations.unexpectedError, variant: 'destructive'});
+        toast({ title: t('error'), description: t('unexpected.error'), variant: 'destructive'});
     } finally {
         setIsLoading(false);
     }
@@ -120,8 +95,8 @@ export function PasswordGenerator({ translations }: { translations: Translations
       navigator.clipboard.writeText(generatedPassword);
       setIsCopied(true);
       toast({
-        title: translations.copied,
-        description: translations.copiedDescription,
+        title: t('copied'),
+        description: t('copied.description'),
       });
     }
   };
@@ -134,9 +109,9 @@ export function PasswordGenerator({ translations }: { translations: Translations
   }
   
   const passwordTypes = {
-      'general': translations.passwordTypeGeneral,
-      '6-digit': translations.passwordType6Digit,
-      '8-digit': translations.passwordType8Digit,
+      'general': t('password.type.general'),
+      '6-digit': t('password.type.6-digit'),
+      '8-digit': t('password.type.8-digit'),
   }
 
   return (
@@ -145,21 +120,21 @@ export function PasswordGenerator({ translations }: { translations: Translations
         <CardHeader className="text-center">
           <div className="mx-auto flex items-center justify-center gap-2">
               <Lock className="h-6 w-6 text-primary" />
-              <CardTitle className="font-headline text-3xl tracking-tight">{translations.appTitle}</CardTitle>
+              <CardTitle className="font-headline text-3xl tracking-tight">{t('app.title')}</CardTitle>
           </div>
-          <CardDescription className="pt-1">{translations.appDescription}</CardDescription>
+          <CardDescription className="pt-1">{t('app.description')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-              <Label htmlFor="password">{translations.masterPassword}</Label>
-              <Input id="password" type="password" placeholder={translations.masterPasswordPlaceholder} value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Label htmlFor="password">{t('master.password')}</Label>
+              <Input id="password" type="password" placeholder={t('master.password.placeholder')} value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
           <div className="space-y-2">
-              <Label htmlFor="salt">{translations.saltKeyword}</Label>
-              <Input id="salt" type="text" placeholder={translations.saltKeywordPlaceholder} value={salt} onChange={(e) => setSalt(e.target.value)} />
+              <Label htmlFor="salt">{t('salt.keyword')}</Label>
+              <Input id="salt" type="text" placeholder={t('salt.keyword.placeholder')} value={salt} onChange={(e) => setSalt(e.target.value)} />
           </div>
           <div className="space-y-3">
-              <Label>{translations.passwordType}</Label>
+              <Label>{t('password.type')}</Label>
               <RadioGroup defaultValue="general" value={generationType} onValueChange={(value: GenerationType) => setGenerationType(value)} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {(['general', '6-digit', '8-digit'] as const).map(value => (
                       <div key={value}>
@@ -173,16 +148,16 @@ export function PasswordGenerator({ translations }: { translations: Translations
           </div>
           <Button onClick={handleGenerate} className="w-full" size="lg" disabled={isLoading}>
               <KeyRound className="mr-2 h-5 w-5" />
-              {isLoading ? translations.generating : translations.generatePassword}
+              {isLoading ? t('generating') : t('generate.password')}
           </Button>
         </CardContent>
       </Card>
       <Dialog open={isDialogOpen} onOpenChange={onDialogClose}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{translations.yourGeneratedPassword}</DialogTitle>
+            <DialogTitle>{t('your.generated.password')}</DialogTitle>
             <DialogDescription>
-              {translations.copyYourPassword}
+              {t('copy.your.password')}
             </DialogDescription>
           </DialogHeader>
           <div className="relative w-full rounded-lg border bg-secondary p-4 mt-2">
@@ -191,12 +166,12 @@ export function PasswordGenerator({ translations }: { translations: Translations
             </p>
             <Button variant="ghost" size="icon" className="absolute top-1/2 right-2 -translate-y-1/2 text-muted-foreground hover:text-foreground" onClick={handleCopy}>
                 {isCopied ? <Check className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5" />}
-                <span className="sr-only">{translations.copyPassword}</span>
+                <span className="sr-only">{t('copy.password')}</span>
             </Button>
           </div>
           <DialogFooter className="mt-4">
             <Button type="button" onClick={() => onDialogClose(false)} className="w-full">
-              {translations.close}
+              {t('close')}
             </Button>
           </DialogFooter>
         </DialogContent>
