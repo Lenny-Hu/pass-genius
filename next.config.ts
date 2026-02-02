@@ -2,8 +2,8 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: '/pass-genuis',
-  assetPrefix: '/pass-genuis/',
+  basePath: '/pass-genius',
+  assetPrefix: '/pass-genius/',
   trailingSlash: false,
   /* config options here */
   typescript: {
