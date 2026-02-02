@@ -43,4 +43,7 @@ export default {
   'theme.golden': 'Golden',
   'theme.violet': 'Violet',
   'theme.sunset': 'Sunset',
+  'update.available.title': 'Update Available',
+  'update.available.description': 'A new version of the application is available.',
+  'update.now': 'Update Now',
 } as const;

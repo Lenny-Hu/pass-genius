@@ -43,4 +43,7 @@ export default {
   'theme.golden': '流金',
   'theme.violet': '紫罗兰',
   'theme.sunset': '落日',
+  'update.available.title': '有新版本',
+  'update.available.description': '应用程序有新版本可用。',
+  'update.now': '立即更新',
 } as const;
