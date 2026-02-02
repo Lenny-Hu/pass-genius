@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -283,6 +283,11 @@ export function PasswordGenerator() {
               {isLoading ? t('generating') : t('generate.password')}
           </Button>
         </CardContent>
+        <CardFooter className="justify-end p-4 pt-0">
+          <p className="text-xs text-muted-foreground">
+            v{process.env.NEXT_PUBLIC_APP_VERSION}
+          </p>
+        </CardFooter>
       </Card>
       <Dialog open={isDialogOpen} onOpenChange={onDialogClose}>
         <DialogContent className="sm:max-w-md">
