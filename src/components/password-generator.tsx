@@ -284,7 +284,7 @@ export function PasswordGenerator() {
           </Button>
         </CardContent>
         <CardFooter className="justify-end p-4 pt-0">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground opacity-75">
             v{process.env.NEXT_PUBLIC_APP_VERSION}
           </p>
         </CardFooter>
